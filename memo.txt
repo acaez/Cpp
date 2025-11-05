@@ -1,0 +1,131 @@
+1. Types d'accès aux membres d'une classe
+----------------------------------------
+
+private:
+    - Les membres sont accessibles uniquement à l'intérieur de la classe
+    - Les classes dérivées n'y ont pas accès
+    - C'est le niveau d'accès par défaut dans une classe
+
+protected:
+    - Les membres sont accessibles dans la classe et dans les classes dérivées
+    - Pas accessibles de l'extérieur de la classe
+    - Idéal pour l'héritage car permet aux classes filles d'accéder aux membres
+
+public:
+    - Les membres sont accessibles partout
+    - De l'intérieur de la classe
+    - Des classes dérivées
+    - De l'extérieur de la classe
+
+2. Constructeurs et Destructeur
+------------------------------
+
+Constructeur par défaut:
+    - Créé automatiquement si aucun autre constructeur n'est défini
+    - Ne prend aucun paramètre
+    - Initialise les attributs avec des valeurs par défaut
+
+Constructeur de copie:
+    - Crée un nouvel objet comme copie d'un objet existant
+    - Prend en paramètre une référence constante à un objet du même type
+    - Doit faire une copie profonde si nécessaire
+
+Opérateur d'assignation:
+    - Copie un objet dans un autre déjà existant
+    - Surcharge de l'opérateur =
+    - Doit vérifier l'auto-assignation (if this != &other)
+    - Doit retourner une référence à l'objet courant (*this)
+
+Destructeur virtuel:
+    - Libère les ressources allouées par l'objet
+    - Le mot-clé 'virtual' est crucial pour l'héritage
+    - Permet d'appeler le bon destructeur lors de la destruction d'un objet via un pointeur de la classe de base
+    - Évite les fuites mémoire dans l'héritage
+
+Pourquoi virtual est important:
+-----------------------------
+Sans virtual:
+    Animal* a = new Dog();
+    delete a; // Appelle seulement ~Animal()
+
+Avec virtual:
+    Animal* a = new Dog();
+    delete a; // Appelle ~Dog() puis ~Animal()
+
+3. Le Polymorphisme
+------------------
+
+Le polymorphisme est un concept fondamental en POO qui permet à des objets de différentes classes 
+d'être traités comme des objets d'une même classe de base.
+
+Types de Polymorphisme:
+1. Polymorphisme au moment de la compilation (surcharge de fonctions)
+2. Polymorphisme au moment de l'exécution (fonctions virtuelles)
+
+Comment ça marche:
+-----------------
+1. Déclaration:
+    class Animal {
+        public:
+            virtual void makeSound() const; // Fonction virtuelle dans la classe de base
+    };
+
+    class Dog : public Animal {
+        public:
+            virtual void makeSound() const; // Redéfinition dans la classe dérivée
+    };
+
+2. Utilisation:
+    const Animal* animal = new Dog();  // Un pointeur Animal peut pointer vers un Dog
+    animal->makeSound();               // Appelle Dog::makeSound() et non Animal::makeSound()
+
+Règles importantes:
+------------------
+1. Le mot-clé 'virtual' est nécessaire dans la classe de base
+2. La fonction doit être redéfinie avec exactement la même signature dans la classe dérivée
+3. Le polymorphisme ne fonctionne qu'avec les pointeurs ou les références
+4. Le destructeur doit être virtuel si la classe est destinée à être héritée
+
+Avantages:
+----------
+1. Flexibilité : le même code peut travailler avec différents types dérivés
+2. Extensibilité : facilite l'ajout de nouvelles classes dérivées
+3. Réutilisation du code : permet d'écrire du code générique qui fonctionne avec toute la hiérarchie de classes
+
+4. Importance du destructeur virtuel
+----------------------------------
+
+Problème critique sans destructeur virtuel:
+
+Sans virtual dans la classe de base:
+    class Animal {
+        ~Animal();  // PAS virtual !
+    };
+    
+    class Dog : public Animal {
+        Brain* brain;
+        ~Dog() { delete brain; }  // Ne sera jamais appelé !
+    };
+
+    Animal* dog = new Dog();
+    delete dog;  // FUITE MÉMOIRE : seul ~Animal() est appelé
+
+Conséquences:
+1. Le destructeur de Dog n'est jamais appelé
+2. Le Brain* n'est jamais libéré
+3. Fuite mémoire garantie
+4. Comportement indéfini possible
+
+Solution avec virtual:
+    class Animal {
+        virtual ~Animal();  // VIRTUAL obligatoire
+    };
+
+    Animal* dog = new Dog();
+    delete dog;  // Appelle ~Dog() puis ~Animal()
+
+Règle d'or:
+-----------
+Dès qu'une classe a au moins une fonction virtuelle, son destructeur DOIT être virtuel.
+Sinon, la destruction polymorphe causera des fuites mémoire.
+
