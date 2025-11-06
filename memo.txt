@@ -129,3 +129,16 @@ Règle d'or:
 Dès qu'une classe a au moins une fonction virtuelle, son destructeur DOIT être virtuel.
 Sinon, la destruction polymorphe causera des fuites mémoire.
 
+5. Classes Abstraites
+--------------------
+
+Une classe abstraite est une classe qui ne peut pas être instanciée directement.
+Elle sert uniquement de classe de base pour d'autres classes.
+
+Copie Profonde:
+--------------
+La copie profonde garantit que chaque objet possède ses propres ressources et 
+peut être détruit indépendamment sans affecter les autres instances. 
+C'est essentiel pour la sécurité mémoire en C++.
+
+
