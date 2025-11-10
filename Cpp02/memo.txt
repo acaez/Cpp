@@ -1,0 +1,57 @@
+NOMBRES À VIRGULE FIXE :
+Format de représentation numérique avec un nombre fixe de bits pour la partie décimale.
+Stocké comme un entier mais interprété avec une partie fractionnaire.
+Structure : [partie entière][partie fractionnaire] (ex: 24 bits + 8 bits)
+Avantages : précision exacte, calculs rapides, pas d'erreurs d'arrondi.
+
+FORME CANONIQUE ORTHODOXE :
+Ensemble de 4 fonctions membres obligatoires pour une classe.
+1. Constructeur par défaut
+2. Constructeur de copie (const Class& src)
+3. Opérateur d'assignation (operator=)
+4. Destructeur
+But : Garantir une gestion correcte de la mémoire et des copies.
+
+SURCHARGE D'OPÉRATEURS :
+Permet de définir le comportement des opérateurs pour nos classes.
+Comparaison : >, <, >=, <=, ==, !=
+Arithmétique : +, -, *, /
+Incrémentation : ++x (préfixe), x++ (postfixe)
+Décrémentation : --x (préfixe), x-- (postfixe)
+
+OPÉRATEURS CONST :
+Méthodes qui ne modifient pas l'objet.
+Peuvent être appelées sur des objets const.
+Syntaxe : type function() const;
+Exemple : bool operator>(const Fixed& copy) const;
+
+FONCTIONS STATIQUES :
+Appartiennent à la classe, pas aux instances.
+Accessibles sans créer d'objet.
+Ne peuvent pas utiliser this ou les membres non-statiques.
+Exemple : static Fixed& min(Fixed& a, Fixed& b);
+
+MANIPULATIONS DE BITS :
+Décalage à gauche (<<) : multiplication par 2^n
+Décalage à droite (>>) : division par 2^n
+Usage dans Fixed :
+- Conversion int : value << _fractionalBits
+- Conversion float : roundf(value * (1 << _fractionalBits))
+
+CONVERSIONS :
+Explicites via constructeurs :
+- De int vers Fixed : Fixed(const int value)
+- De float vers Fixed : Fixed(const float value)
+Méthodes de conversion :
+- Vers float : toFloat()
+- Vers int : toInt()
+
+PROTECTION CONTRE ERREURS :
+Vérification division par zéro
+Protection contre auto-assignation (if (this != &copy))
+Gestion des dépassements avec long pour calculs intermédiaires
+
+INCLUDES NÉCESSAIRES :
+#include <iostream> : pour les flux d'entrée/sortie
+#include <cmath> : pour roundf() dans les conversions
+#include <stdexcept> : pour les exceptions (ex: division par zéro)

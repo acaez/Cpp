@@ -1,0 +1,64 @@
+POINTEURS :
+Un type de variable qui stocke l'adresse mémoire d'une autre variable.
+Permet d'accéder et de modifier indirectement les données via leur adresse.
+Syntaxe : type* ptr = &variable;
+
+RÉFÉRENCES :
+Une alternative aux pointeurs, plus sécurisée et plus simple à utiliser.
+C'est un alias pour une variable existante, doit être initialisée à la déclaration.
+Ne peut pas être null et ne peut pas être réassignée.
+Syntaxe : type& ref = variable;
+
+NEW :
+Opérateur qui alloue dynamiquement de la mémoire sur le tas (heap).
+Retourne un pointeur vers la mémoire allouée.
+Doit toujours être associé à un delete pour éviter les fuites mémoire.
+Syntaxe : type* ptr = new type;
+
+DELETE :
+Opérateur qui libère la mémoire allouée dynamiquement avec new.
+Doit être utilisé exactement une fois pour chaque new.
+Syntaxe : delete ptr;
+
+ALLOCATION DE TABLEAU :
+Utilisation de new[] pour allouer un tableau dynamique.
+Doit être libéré avec delete[] (pas delete simple).
+Syntaxe : type* arr = new type[taille];
+          delete[] arr;
+
+THIS :
+Pointeur qui référence l'objet courant dans une méthode de classe.
+Permet d'accéder aux membres de la classe et de différencier les paramètres des attributs.
+Syntaxe : this->attribut ou (*this).attribut
+
+MEMBRES STATIQUES :
+Appartiennent à la classe elle-même, pas aux instances.
+Partagés par tous les objets de la classe.
+Doivent être déclarés dans la classe et définis hors de la classe.
+Syntaxe : static type membre;
+
+SWITCH CASE :
+Structure de contrôle pour gérer plusieurs cas possibles.
+Alternative plus claire que plusieurs if/else quand on compare une valeur à des constantes.
+Syntaxe :
+switch(variable) {
+    case valeur1: 
+        // code
+        break;
+    default:
+        // code par défaut
+}
+
+STREAMS (FLUX) :
+std::cout : flux de sortie standard (affichage)
+std::cin : flux d'entrée standard (saisie)
+std::cerr : flux d'erreur standard
+std::ifstream : flux de lecture de fichier
+std::ofstream : flux d'écriture de fichier
+
+INCLUDES IMPORTANTS :
+#include <iostream> : entrées/sorties standards
+#include <fstream> : manipulation de fichiers
+#include <string> : manipulation de chaînes de caractères
+#include <cstdlib> : fonctions utilitaires générales
+#include <cstring> : manipulation de chaînes style C

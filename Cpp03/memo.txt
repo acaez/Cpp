@@ -1,0 +1,25 @@
+1. Points importants :
+   - unsigned int : Pour les valeurs qui ne peuvent pas être négatives
+   - Constructeur de copie vs Opérateur d'assignation :
+     * Constructeur copie : Création d'un nouvel objet
+     * Opérateur = : Modification d'un objet existant
+
+2. Héritage
+   -Héritage public (ScavTrap hérite de ClapTrap)
+   - class ScavTrap : public ClapTrap
+   - Protected vs Private :
+     * private : inaccessible aux classes dérivées
+     * protected : accessible aux classes dérivées
+
+3. Polymorphisme avec 'virtual'
+   - virtual ~ClapTrap() : Destructeur virtuel pour destruction propre
+   - virtual void attack() : Permet de redéfinir la fonction dans la classe dérivée
+   - Liaison tardive : La bonne fonction est appelée selon le type réel de l'objet
+
+4. Construction/Destruction avec héritage
+   - Construction : Parent (ClapTrap) → Enfant (ScavTrap)
+   - Destruction : Enfant (ScavTrap) → Parent (ClapTrap)
+
+5. Liste d'initialisation dans le constructeur
+   - ClapTrap(name) : Appel du constructeur parent
+   - Modification des valeurs dans le corps du constructeur
